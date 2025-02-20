@@ -1,4 +1,5 @@
 const express = require('express');
+const connectDB = require('./config/db');
 require('dotenv').config();
 
 const app = express();
@@ -13,6 +14,8 @@ app.get('/', (req, res) => {
     res.send( 'Server is running')
 })
 
+//DB Connection
+connectDB();
 
 //Start server
 app.listen(port, ()=> {
