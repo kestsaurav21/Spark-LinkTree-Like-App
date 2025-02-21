@@ -18,7 +18,16 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    
+    category: {
+        type: String
+    },
+    bio: {
+        type: String
+    },
+    username:{
+        type: String,
+        unique: true,
+    }
 });
 
 module.exports = mongoose.model('User', userSchema);
