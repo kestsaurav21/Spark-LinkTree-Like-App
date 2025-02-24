@@ -39,7 +39,6 @@ const userSchema = new Schema({
     },
     terms : {
         type: Boolean,
-        required: true,
     },
     username : {
         type: String,
