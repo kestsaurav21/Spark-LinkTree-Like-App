@@ -69,8 +69,7 @@ exports.loginUser = async (req, res) => {
 
 exports.getUser = async (req, res) => {
     try {
-        const { id } = req.params.id;
-        const user = await User.findById({ _id : id });
+        const user = await User.findById({ _id : req.user.id });
         if (!user) {
             return res.status(404).json({ message: 'User not found!' });
         }
@@ -79,5 +78,28 @@ exports.getUser = async (req, res) => {
         return res.status(500).json(error);
     }
 }
+
+exports.updateUser = async (req, res) => {
+    const user = await User.findById({ _id: req.user.id });
+    if (!user) {
+        return res.status(404).json({ message: "User not found" });
+    }
+    try {
+        user.firstName = req.body.firstName;
+        user.lastName = req.body.lastName;
+        user.email = req.body.email;
+        //encrypt password
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
+        user.password = hashedPassword;
+        await user.save();
+        return res.status(200).json({ message: "User updated successfully" });
+
+    }catch (error) {
+        return res.status(500).json({ message: "Error updating user" });
+    }
+}
+
+
 
 
