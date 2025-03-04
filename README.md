@@ -22,7 +22,7 @@ Spark is a modern Link Management application designed to help users create, man
 ### Steps to Run the Project
 1. Clone the repository:
    ```sh
-   git clone [https://github.com/yourusername/spark.git](https://github.com/kestsaurav21/Spark-LinkTree-Like-App.git)
+   git clone https://github.com/kestsaurav21/Spark-LinkTree-Like-App.git
    cd spark
    ```
 
