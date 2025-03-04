@@ -7,7 +7,6 @@ const shareRoutes = require("./routes/share.routes");
 const authRoutes = require("./routes/auth.routes");
 const analyticsRoutes = require("./routes/analytics.routes");
 const bodyParser = require("body-parser");
-const { connectDB } = require("./config/db");
 
 const app = express();
 
@@ -16,8 +15,8 @@ app.use(express.json());
 app.use(cors({ origin: "*" }));
 
 // test route
-app.get("/", (req, res) => {
-  res.send("Server is running!");
+app.get("/test", (req, res) => {
+  res.send("Running Spark Server");
 });
 
 // user routes
@@ -29,8 +28,14 @@ app.use("/analytics", analyticsRoutes);
 
 const port = process.env.PORT || 8080;
 
-//DB connection
-connectDB();
+mongoose
+  .connect(process.env.MONGODB_URI)
+  .then(() => {
+    console.log("Connected to MongoDB");
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
