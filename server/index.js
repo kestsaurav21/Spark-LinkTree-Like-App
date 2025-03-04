@@ -16,8 +16,8 @@ app.use(express.json());
 app.use(cors({ origin: "*" }));
 
 // test route
-app.get("/test", (req, res) => {
-  res.send("Running Spark Server");
+app.get("/", (req, res) => {
+  res.send("Server is running!");
 });
 
 // user routes
