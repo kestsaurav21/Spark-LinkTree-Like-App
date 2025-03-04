@@ -1,17 +1,25 @@
-const express = require('express');
-const { createUser, loginUser, getUser, updateUser } = require('../controllers/user.controller');
-const {isAuth} = require('../middleware/auth');
+const multer = require("multer");
+const {
+  updateUserInfo,
+  getUser,
+  updateUserAppearanceSettings
+} = require("../controllers/user.controllers");
+const { isAuth } = require("../middlewares/auth");
+const router = require("express").Router();
 
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fieldSize: 25 * 1024 * 1024 }
+});
 
-const router = express.Router();
-
-
-router.post('/signup', createUser);
-router.post('/login', loginUser);
-router.get('/user', isAuth, getUser);
-router.put("/update", isAuth, updateUser);
-
-
+router.get("/userData", isAuth, getUser);
+router.put("/update", isAuth, updateUserInfo);
+router.put(
+  "/updateUserPreferences",
+  isAuth,
+  upload.single("image"),
+  updateUserAppearanceSettings
+);
+router.get("/user/:id", getUser);
 
 module.exports = router;
-
