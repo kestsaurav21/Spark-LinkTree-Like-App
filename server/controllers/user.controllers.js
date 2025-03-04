@@ -117,7 +117,7 @@ exports.updateUserAppearanceSettings = async (req, res) => {
             title: link.title,
             url: link.url,
             type: link.type,
-            category: link.category==="OT" ? "SHOP" : "LINK",
+            category: link.type==="OT" ? "SHOP" : "LINK",
             isPublic: link.isPublic
           });
         } else {
@@ -125,14 +125,14 @@ exports.updateUserAppearanceSettings = async (req, res) => {
             title: link.title,
             url: link.url,
             type: link.type,
-            category: link.category==="OT" ? "SHOP" : "LINK",
+            category: link.type==="OT" ? "SHOP" : "LINK",
             isPublic: link.isPublic,
             userId: user._id, // ✅ Include userId
           });
           await newLink.save();
         }
       }
-      if (links.length === 0) {
+      if (req.body.links.length === 0) {
         await Link.deleteMany({ userId: user._id });
       }
     }
@@ -147,8 +147,8 @@ exports.updateUserAppearanceSettings = async (req, res) => {
         user[field] = req.body[field];
       }
     });
-
-    if (req.body.themeVariant) {
+    
+    if (req.body?.themeVariant) {
       user.themeVariant = req.body.themeVariant;
     }
     if (req.body.fontFamily) {
@@ -158,6 +158,7 @@ exports.updateUserAppearanceSettings = async (req, res) => {
     await user.save();
     res.status(200).json({ message: "Appearance settings updated successfully" });
   } catch (err) {
+    console.log(err);
     res.status(500).json({ message: "Internal server error" });
   }
 };

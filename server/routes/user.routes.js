@@ -20,6 +20,6 @@ router.put(
   upload.single("image"),
   updateUserAppearanceSettings
 );
-router.get("/user/:id", getUser);
+router.get("/userData/:id", getUser);
 
 module.exports = router;

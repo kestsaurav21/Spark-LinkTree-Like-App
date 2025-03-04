@@ -2,12 +2,11 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 // Enum defining allowed types for links and shops
-const typeEnum = ["LINK", "SHOP"];
-const linkCategoryEnum = ["IN", "FB", "YT", "TW"]; // Social platforms
-const shopCategoryEnum = ["OT"]; // Default shop category
+const typeEnum = ["IN", "FB", "YT", "TW", "OT"]; // Social platforms
+const categoryEnum = ["LINK", "SHOP"];
 
 const LinkSchema = new Schema({
-  ownerId: {
+  userId: {
     ref: "User", // References the Account model to associate entries with users
     type: Schema.Types.ObjectId,
     required: true, // Ensures each entry belongs to a user
@@ -31,7 +30,7 @@ const LinkSchema = new Schema({
   },
   category: {
     type: String,
-    enum: [...linkCategoryEnum, ...shopCategoryEnum]
+    enum: categoryEnum
   },
   isPublic: {
     default: false,

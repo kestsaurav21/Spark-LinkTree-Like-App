@@ -7,6 +7,7 @@ const shareRoutes = require("./routes/share.routes");
 const authRoutes = require("./routes/auth.routes");
 const analyticsRoutes = require("./routes/analytics.routes");
 const bodyParser = require("body-parser");
+const { connectDB } = require("./config/db");
 
 const app = express();
 
@@ -28,14 +29,8 @@ app.use("/analytics", analyticsRoutes);
 
 const port = process.env.PORT || 8080;
 
-mongoose
-  .connect(process.env.MONGODB_URI)
-  .then(() => {
-    console.log("Connected to MongoDB");
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+//DB connection
+connectDB();
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
